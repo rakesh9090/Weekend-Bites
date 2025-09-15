@@ -4,6 +4,8 @@ import com.demo.assignmentapplication.data.local.HoldingDao
 import com.demo.assignmentapplication.data.local.HoldingEntity
 import com.demo.assignmentapplication.data.remote.ApiServices
 import com.demo.assignmentapplication.data.remote.Resource
+import com.demo.assignmentapplication.util.Constant.DB_ERROR
+import com.demo.assignmentapplication.util.Constant.NO_DATA
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -23,10 +25,10 @@ class HoldingsRepositoryImpl @Inject constructor(
                 when {
                     list.isNotEmpty() -> Resource.success(list)
                     hasSuccessfullyFetchedData -> Resource.success(list) // Empty but previously fetched
-                    else -> Resource.error("No data available. Please check your internet connection and try again.")
+                    else -> Resource.error(NO_DATA)
                 }
             }
-            .catch { e -> emit(Resource.error(e.message ?: "DB error")) }
+            .catch { e -> emit(Resource.error(e.message ?: DB_ERROR)) }
             .onStart { emit(Resource.loading()) }
 
 
@@ -45,8 +47,6 @@ class HoldingsRepositoryImpl @Inject constructor(
             dao.insertAll(mapped)
             hasSuccessfullyFetchedData = true
         } catch (e: Exception) {
-            // If we've never successfully fetched data and database is empty, 
-            // the getHoldings() flow will show an error
         }
     }
 }
