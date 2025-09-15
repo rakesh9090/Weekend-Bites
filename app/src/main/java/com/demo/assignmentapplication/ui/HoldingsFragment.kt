@@ -42,33 +42,15 @@ class HoldingsFragment : Fragment(R.layout.fragment_holdings) {
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.state.collect { state ->
-                val list = state.data
-                adapter.submitList(list)
-
-                if (!list.isNullOrEmpty()) {
-                    val summary = calculator.calculateSummary(list.map { it.toHolding() })
-
-                    binding.currentValue.text = summary.currentValue
-                    binding.totalInvestment.text = summary.totalInvestment
-
-                    binding.todayPnl.apply {
-                        text = summary.todayPnl
-                        setTextColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                if (summary.todayPnl.startsWith("-")) R.color.loss_red else R.color.profit_green
-                            )
-                        )
+                when {
+                    state.isLoading -> {
+                        showLoadingState()
                     }
-
-                    binding.totalPnl.apply {
-                        text = summary.totalPnl
-                        setTextColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                if (summary.totalPnl.startsWith("-")) R.color.loss_red else R.color.profit_green
-                            )
-                        )
+                    state.error != null -> {
+                        showErrorState(state.error)
+                    }
+                    else -> {
+                        showSuccessState(state.data)
                     }
                 }
             }
@@ -85,6 +67,59 @@ class HoldingsFragment : Fragment(R.layout.fragment_holdings) {
             } else {
                 collapseView(binding.expandableLayout)
                 binding.arrowIcon.setImageResource(R.drawable.outline_arrow_drop_down_24)
+            }
+        }
+    }
+
+    private fun showLoadingState() {
+        binding.mainContent.visibility = View.GONE
+        binding.loadingLayout.visibility = View.VISIBLE
+        binding.errorLayout.visibility = View.GONE
+    }
+
+    private fun showErrorState(errorMessage: String?) {
+        binding.mainContent.visibility = View.GONE
+        binding.loadingLayout.visibility = View.GONE
+        binding.errorLayout.visibility = View.VISIBLE
+        
+        binding.errorMessage.text = errorMessage ?: getString(R.string.error_loading_holdings)
+        
+        binding.retryButton.setOnClickListener {
+            viewModel.refresh()
+        }
+    }
+
+    private fun showSuccessState(data: List<com.demo.assignmentapplication.data.local.HoldingEntity>) {
+        binding.mainContent.visibility = View.VISIBLE
+        binding.loadingLayout.visibility = View.GONE
+        binding.errorLayout.visibility = View.GONE
+        
+        adapter.submitList(data)
+
+        if (data.isNotEmpty()) {
+            val summary = calculator.calculateSummary(data.map { it.toHolding() })
+
+            binding.currentValue.text = summary.currentValue
+            binding.totalInvestment.text = summary.totalInvestment
+
+            binding.todayPnl.apply {
+                text = summary.todayPnl
+                setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        if (summary.todayPnl.startsWith("-")) R.color.loss_red else R.color.profit_green
+                    )
+                )
+            }
+
+            binding.totalPnl.apply {
+                text = summary.totalPnl
+                setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        if (summary.totalPnl.startsWith("-")) R.color.loss_red else R.color.profit_green
+                    )
+                )
             }
         }
     }

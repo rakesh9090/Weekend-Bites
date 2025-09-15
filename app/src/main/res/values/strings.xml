@@ -7,5 +7,9 @@
     <string name="ltp">LTP:</string>
     <string name="p_l">P&amp;L:</string>
     <string name="net_qty">Net QTY:</string>
+    <string name="loading_holdings">Loading holdings...</string>
+    <string name="retry">Retry</string>
+    <string name="error_loading_holdings">Failed to load holdings. Please try again.</string>
+    <string name="error_no_data_offline">No data available. Please check your internet connection and try again.</string>
 
 </resources>

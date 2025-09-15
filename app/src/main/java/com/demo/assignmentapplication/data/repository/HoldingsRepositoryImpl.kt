@@ -15,9 +15,17 @@ class HoldingsRepositoryImpl @Inject constructor(
     private val dao: HoldingDao
 ) : HoldingsRepository {
 
+    private var hasSuccessfullyFetchedData = false
+
     override fun getHoldings(): Flow<Resource<List<HoldingEntity>>> =
         dao.getAll()
-            .map { list -> Resource.success(list) }
+            .map { list -> 
+                when {
+                    list.isNotEmpty() -> Resource.success(list)
+                    hasSuccessfullyFetchedData -> Resource.success(list) // Empty but previously fetched
+                    else -> Resource.error("No data available. Please check your internet connection and try again.")
+                }
+            }
             .catch { e -> emit(Resource.error(e.message ?: "DB error")) }
             .onStart { emit(Resource.loading()) }
 
@@ -35,8 +43,10 @@ class HoldingsRepositoryImpl @Inject constructor(
                 )
             }
             dao.insertAll(mapped)
+            hasSuccessfullyFetchedData = true
         } catch (e: Exception) {
-            // TODO: log or handle gracefully
+            // If we've never successfully fetched data and database is empty, 
+            // the getHoldings() flow will show an error
         }
     }
 }
