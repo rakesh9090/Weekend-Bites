@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Assignment Application</string>
+    <string name="profit_loss">Profit &amp; Loss*</string>
+    <string name="today_s_profit_loss">Today\'s Profit &amp; Loss*</string>
+    <string name="total_investment">Total investment*</string>
+    <string name="current_value">Current value*</string>
+
 </resources>

@@ -11,4 +11,5 @@
     <!-- P&L colors -->
     <color name="profit_green">#1BA672</color>
     <color name="loss_red">#D32F2F</color>
+    <color name="light_gray">#A7AAAAAA</color>
 </resources>

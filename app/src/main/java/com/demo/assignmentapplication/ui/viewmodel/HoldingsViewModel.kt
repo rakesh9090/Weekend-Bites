@@ -18,6 +18,10 @@ class HoldingsViewModel @Inject constructor(
     private val repository: HoldingsRepository
 ) : ViewModel() {
 
+    init {
+        refresh()
+    }
+
     val state: StateFlow<HoldingsState> = repository.getHoldings()
         .map { resource ->
             when (resource.status) {

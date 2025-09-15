@@ -33,6 +33,7 @@ class HoldingsAdapter :
         fun bind(holding: HoldingEntity) {
             binding.tvSymbol.text = holding.symbol
             binding.tvLtp.text = "LTP: ₹${holding.ltp}"
+            binding.tvQuantity.text = "Net QTY: ₹${holding.quantity}"
 
             val pnl = (holding.ltp - holding.avgPrice) * holding.quantity
             binding.tvPnl.text = "P&L: ₹${"%.2f".format(pnl)}"
