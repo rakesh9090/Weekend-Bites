@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Grey background (stroke simulation) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/light_gray"/>
+            <corners android:topLeftRadius="12dp"
+                android:topRightRadius="12dp"/>
+        </shape>
+    </item>
+
+    <!-- White foreground (shifted down by 1dp to hide all but top stroke) -->
+    <item android:top="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white"/>
+            <corners android:topLeftRadius="12dp"
+                android:topRightRadius="12dp"/>
+        </shape>
+    </item>
+
+</layer-list>

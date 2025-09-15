@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.testImplementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -86,6 +88,18 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.hilt.testing)
     kaptTest(libs.hilt.compiler)
+    
+    // Additional testing dependencies
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("io.mockk:mockk:1.13.8")
+    testImplementation("androidx.test:core:1.5.0")
+    testImplementation("androidx.room:room-testing:2.7.2")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+    // For mocking API responses in tests
+    testImplementation ("com.squareup.okhttp3:mockwebserver:4.11.0")
+    androidTestImplementation ("com.squareup.okhttp3:mockwebserver:4.11.0")
+    testImplementation("app.cash.turbine:turbine:1.0.0")
+
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
@@ -99,4 +113,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(project(":lib"))
+    testImplementation(kotlin("test"))
 }

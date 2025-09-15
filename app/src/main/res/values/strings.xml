@@ -4,5 +4,8 @@
     <string name="today_s_profit_loss">Today\'s Profit &amp; Loss*</string>
     <string name="total_investment">Total investment*</string>
     <string name="current_value">Current value*</string>
+    <string name="ltp">LTP:</string>
+    <string name="p_l">P&amp;L:</string>
+    <string name="net_qty">Net QTY:</string>
 
 </resources>

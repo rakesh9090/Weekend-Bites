@@ -32,11 +32,11 @@ class HoldingsAdapter :
 
         fun bind(holding: HoldingEntity) {
             binding.tvSymbol.text = holding.symbol
-            binding.tvLtp.text = "LTP: ₹${holding.ltp}"
-            binding.tvQuantity.text = "Net QTY: ₹${holding.quantity}"
+            binding.tvLtp.text = " ₹ ${holding.ltp}"
+            binding.tvQuantity.text = " ${holding.quantity}"
 
             val pnl = (holding.ltp - holding.avgPrice) * holding.quantity
-            binding.tvPnl.text = "P&L: ₹${"%.2f".format(pnl)}"
+            binding.tvPnl.text = " ₹ ${"%.2f".format(pnl)}"
             val pnlColor = if (pnl >= 0) {
                 ContextCompat.getColor(binding.root.context, R.color.profit_green)
             } else {

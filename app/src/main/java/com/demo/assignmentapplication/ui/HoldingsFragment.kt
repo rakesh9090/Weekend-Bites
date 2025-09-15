@@ -46,10 +46,8 @@ class HoldingsFragment : Fragment(R.layout.fragment_holdings) {
                 adapter.submitList(list)
 
                 if (!list.isNullOrEmpty()) {
-                    // use lib function to calculate formatted summary
                     val summary = calculator.calculateSummary(list.map { it.toHolding() })
 
-                    // Update UI
                     binding.currentValue.text = summary.currentValue
                     binding.totalInvestment.text = summary.totalInvestment
 

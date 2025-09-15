@@ -11,8 +11,9 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary_blue"
         app:title="Portfolio"
+        app:navigationIcon="@drawable/account_circle_24"
         app:titleTextColor="@color/on_primary"
-        app:menu="@menu/top_app_bar_menu" />
+        app:menu="@menu/top_app_bar_menu"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

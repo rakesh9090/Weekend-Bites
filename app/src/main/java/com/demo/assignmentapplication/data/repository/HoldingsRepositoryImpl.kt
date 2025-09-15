@@ -6,23 +6,21 @@ import com.demo.assignmentapplication.data.remote.ApiServices
 import com.demo.assignmentapplication.data.remote.Resource
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 
 class HoldingsRepositoryImpl @Inject constructor(
     private val api: ApiServices,
     private val dao: HoldingDao
 ) : HoldingsRepository {
 
-    override fun getHoldings(): Flow<Resource<List<HoldingEntity>>> = flow {
-        emit(Resource.loading())
-        try {
-            dao.getAll().collect { list ->
-                emit(Resource.success(list))
-            }
-        } catch (e: Exception) {
-            emit(Resource.error(e.message ?: "DB error"))
-        }
-    }
+    override fun getHoldings(): Flow<Resource<List<HoldingEntity>>> =
+        dao.getAll()
+            .map { list -> Resource.success(list) }
+            .catch { e -> emit(Resource.error(e.message ?: "DB error")) }
+            .onStart { emit(Resource.loading()) }
+
 
     override suspend fun refreshHoldings() {
         try {
