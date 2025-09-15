@@ -7,6 +7,7 @@ import com.demo.assignmentapplication.data.local.SampleDao
 import com.demo.assignmentapplication.data.remote.ApiServices
 import com.demo.assignmentapplication.data.repository.SampleRepository
 import com.demo.assignmentapplication.data.repository.SampleRepositoryImpl
+import com.demo.lib.PortfolioCalculator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,7 +38,7 @@ object AppModule {
     @Singleton
     @Provides
     fun getLocalDataBase(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, "base_db")
+        Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .build()
 
@@ -51,4 +52,7 @@ object AppModule {
         dao: SampleDao
     ): SampleRepository = SampleRepositoryImpl(api, dao)
 
+    @Provides
+    @Singleton
+    fun providePortfolioCalculator(): PortfolioCalculator = PortfolioCalculator()
 }

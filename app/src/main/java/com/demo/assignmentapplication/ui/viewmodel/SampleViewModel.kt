@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-
 class SampleViewModel @Inject constructor(private val repository: SampleRepository) : ViewModel() {
     val state: StateFlow<SampleState> = repository.getSamples()
         .map { resource ->
