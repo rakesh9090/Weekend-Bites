@@ -3,10 +3,10 @@ package com.demo.assignmentapplication.di
 import android.content.Context
 import androidx.room.Room
 import com.demo.assignmentapplication.data.local.AppDatabase
-import com.demo.assignmentapplication.data.local.SampleDao
+import com.demo.assignmentapplication.data.local.HoldingDao
 import com.demo.assignmentapplication.data.remote.ApiServices
-import com.demo.assignmentapplication.data.repository.SampleRepository
-import com.demo.assignmentapplication.data.repository.SampleRepositoryImpl
+import com.demo.assignmentapplication.data.repository.HoldingsRepository
+import com.demo.assignmentapplication.data.repository.HoldingsRepositoryImpl
 import com.demo.lib.PortfolioCalculator
 import dagger.Module
 import dagger.Provides
@@ -43,14 +43,14 @@ object AppModule {
             .build()
 
     @Provides
-    fun provideSampleDao(db: AppDatabase): SampleDao = db.getDao()
+    fun provideHoldingDao(db: AppDatabase): HoldingDao = db.holdingDao()
 
     @Provides
     @Singleton
-    fun provideSampleRepository(
+    fun provideHoldingsRepository(
         api: ApiServices,
-        dao: SampleDao
-    ): SampleRepository = SampleRepositoryImpl(api, dao)
+        dao: HoldingDao
+    ): HoldingsRepository = HoldingsRepositoryImpl(api, dao)
 
     @Provides
     @Singleton

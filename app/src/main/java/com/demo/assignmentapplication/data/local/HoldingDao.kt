@@ -7,10 +7,10 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface SampleDao {
-    @Query("SELECT * FROM sample")
-    fun getAll(): Flow<List<SampleEntity>>
+interface HoldingDao {
+    @Query("SELECT * FROM holdings")
+    fun getAll(): Flow<List<HoldingEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(items: List<SampleEntity>)
+    suspend fun insertAll(items: List<HoldingEntity>)
 }
